@@ -5,12 +5,19 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map.Entry;
+
+import javax.print.attribute.standard.OutputDeviceAssigned;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import etu1773_framework.*;
+import model.Url;
 /**
  *
  * @author itu
@@ -36,6 +43,20 @@ public class FrontServlet extends HttpServlet {
         MappingUrls = mappingUrls;
     }
 
+    public void init(PrintWriter out) {
+        Utilitaire ut=new Utilitaire();
+        HashMap<String,Mapping> maps=new HashMap<>();
+        try {
+        ArrayList<Class> classes=ut.findClassesInPackage("C:/Users/LENOVO/FrameWork_MrNaina/src/java","model");
+        HashMap<String,Mapping> meths=ut.findAllAnnotatedMethods(classes); 
+        for (Entry<String, Mapping> entry : meths.entrySet()) {
+            out.println("<p>Url : " + entry.getKey() + ", ClassName : " + entry.getValue().getClassName() +", MethodName :"+entry.getValue().getMethod() +"</p>");
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -44,6 +65,7 @@ public class FrontServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             Utilitaire ut=new Utilitaire();
+
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -51,6 +73,14 @@ public class FrontServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet FrontServlet at " + ut.getUrl(request) + "</h1>");
+            init(out);
+            // try {
+            // ArrayList<Class> allc=ut.findClassesInPackage("C:/Users/LENOVO/FrameWork_MrNaina/src/java","model");
+            // out.println("<h1>Servlet FrontServlet at " + ut.getUrl(request) + "</h1>");
+            //     for (int i = 0; i < allc.size(); i++) {
+            //         out.println("<p>"+allc.get(i).getName()+"</p>");
+            // }
+            // }catch(Exception e){}
             out.println("</body>");
             out.println("</html>");
         }
