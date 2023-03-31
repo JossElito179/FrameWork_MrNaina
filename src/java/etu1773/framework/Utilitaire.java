@@ -1,12 +1,10 @@
+package etu1773.framework;
 
 import javax.servlet.http.HttpServletRequest;
-
-import model.Url;
 
 import java.util.*;
 import java.io.*;
 import java.lang.reflect.Method;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
